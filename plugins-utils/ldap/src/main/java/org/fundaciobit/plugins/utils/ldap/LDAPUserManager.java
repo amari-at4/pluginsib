@@ -395,6 +395,21 @@ public class LDAPUserManager implements LDAPConstants, Serializable {
       }
 
       SearchControls sc = new SearchControls();
+
+        /**
+         * Algunos servidores LDAP el atributo memberOf es de tipo operacional
+         * en estos casos para que una busqueda en el servidor LDAP no devuelva
+         * dicho atributo es necesario explicitar en la consulta los atributos
+         * que queremos que el servidor LDAP nos devuelva
+         */
+      List<String> ldapAttributesList = new ArrayList<String>();
+      for (String attrib : LDAP_ATTRIBUTES) {
+        if( ldapProperties.getProperty(attrib) != null && !ldapProperties.getProperty(attrib).isEmpty()) {
+          ldapAttributesList.add(ldapProperties.getProperty(attrib));
+        }
+      }
+      sc.setReturningAttributes(ldapAttributesList.toArray(new String[ldapAttributesList.size()]));
+
       String searchScope = ldapProperties.getProperty(LDAP_SEARCHSCOPE);
       if (LDAP_SEARCHSCOPE_ONELEVEL.equals(searchScope)) {
         sc.setSearchScope(SearchControls.ONELEVEL_SCOPE);
