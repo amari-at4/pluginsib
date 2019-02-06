@@ -397,7 +397,7 @@ public class LDAPUserManager implements LDAPConstants, Serializable {
       SearchControls sc = new SearchControls();
 
         /**
-         * Algunos servidores LDAP el atributo memberOf es de tipo operacional
+         * Algunos servidores LDAP el atributo memberOg es de tipo operacional
          * en estos casos para que una busqueda en el servidor LDAP no devuelva
          * dicho atributo es necesario explicitar en la consulta los atributos
          * que queremos que el servidor LDAP nos devuelva
